@@ -3,6 +3,7 @@ import java.util.*;
 public class CubeCoords {
 
     static int[][] C = new int[13][5];
+    static int[] factorials = {1, 1, 2, 6, 24, 120, 720, 5040, 40320};
 
     public static void init() {
         for (int n = 0; n <= 12; n++) {
@@ -91,5 +92,61 @@ public class CubeCoords {
     }
     public static int getSlice() {
         return GetCoordSlice(new CubieCube());
+    }
+
+    public static int GetCoordCP(CubieCube cube) {
+        return getPermutation(cube.cp, 8);
+    }
+
+    public static void SetCP(CubieCube cube, int rank) {
+        setPermutation(cube.cp, rank, 8);
+    }
+
+    public static int GetCoordSliceP(CubieCube cube) {
+        int[] sliceEdges = new int[4];
+        for (int i = 0; i < 4; i++) {
+            sliceEdges[i] = cube.ep[i + 8] - 8;
+        }
+        return getPermutation(sliceEdges, 4);
+    }
+
+    public static void SetSliceP(CubieCube cube, int rank) {
+        int[] sliceEdges = new int[4];
+        setPermutation(sliceEdges, rank, 4);
+        for (int i = 0; i < 4; i++) cube.ep[i + 8] = sliceEdges[i] + 8;
+    }
+    
+    public static int GetCoordUDEP(CubieCube cube) {
+        int[] udEdges = new int[8];
+        System.arraycopy(cube.ep, 0, udEdges, 0, 8);
+        return getPermutation(udEdges, 8);
+    }
+
+    public static void SetUDEP(CubieCube cube, int rank) {
+        int[] udEdges = new int[8];
+        setPermutation(udEdges, rank, 8);
+        System.arraycopy(udEdges, 0, cube.ep, 0, 8);
+    }
+
+    private static int getPermutation(int[] arr, int n) {
+        int rank = 0;
+        for (int i = 0; i < n; i++) {
+            int count = 0;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[i]) count++;
+            }
+            rank += count * factorials[n - 1 - i];
+        }
+        return rank;
+    }
+
+    private static void setPermutation(int[] arr, int rank, int n) {
+        List<Integer> vals = new ArrayList<>();
+        for (int i = 0; i < n; i++) vals.add(i);
+        for (int i = 0; i < n; i++) {
+            int digit = rank / factorials[n - 1 - i];
+            rank %= factorials[n - 1 - i];
+            arr[i] = vals.remove(digit);
+        }
     }
 }
