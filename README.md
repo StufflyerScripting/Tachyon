@@ -42,7 +42,7 @@ Future plans may include:
 
 ## Usage
 
-(Instructions will be added as the project evolves.)
+Check ```Main.java```, everything should be self-explanatory duh.
 
 ---
 
