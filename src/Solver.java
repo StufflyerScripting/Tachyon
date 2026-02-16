@@ -1,3 +1,6 @@
+import logs.LogInfo;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,36 +12,39 @@ public class Solver {
         Phase2Solver.init();
     }
 
-    public static List<String> compute(String scramble) {
+    public static List<String> compute(String scramble) throws IOException {
+
         CubieCube cube = Phase1Solver.applyScramble(scramble);
         long startTime = System.currentTimeMillis();
-        List<String> phase1 = Phase1Solver.solve(cube, 12);
 
-        if (phase1 == null) {
-            return null;
-        }
+        List<String> phase1 = Phase1Solver.solve(cube, 15);
+        if (phase1 == null) return null;
 
         for (String move : phase1) {
             cube = cube.multiply(getMove(move));
         }
+
         if (!Phase1Solver.phase1(cube)) {
             System.out.println("ERROR: Phase 1 solution didn't work!");
             return null;
         }
-        List<String> phase2 = Phase2Solver.solve(cube, 18);
 
-        if (phase2 == null || phase2.isEmpty()) {
-            System.out.println("Already solved!");
-            phase2 = new ArrayList<>();
-        }
+        List<String> phase2 = Phase2Solver.solve(cube, 18);
+        if (phase2 == null) phase2 = new ArrayList<>();
 
         List<String> complete = new ArrayList<>();
         complete.addAll(phase1);
         complete.addAll(phase2);
+
         long elapsed = System.currentTimeMillis() - startTime;
+
         System.out.println("Calculated solution in " + elapsed + "ms.");
+
+        logs.LogInfo.add(scramble, complete, elapsed);
+
         return simplify(complete);
     }
+
 
     static List<String> simplify(List<String> moves) {
         List<String> result = new ArrayList<>();
@@ -51,7 +57,6 @@ public class Solver {
 
             String last = result.get(result.size() - 1);
 
-            // Same face?
             if (last.charAt(0) == move.charAt(0)) {
 
                 int power1 = move_power(last);
