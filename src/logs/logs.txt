@@ -1,0 +1,21 @@
+TACHYON SOLVE LOGS & STATS
+Total solves: 3
+
+---- TIME ----
+AVG: 45ms
+PB: 28ms
+PW: 75ms
+
+---- SOLUTION LENGTH ----
+AVG: 23,67 moves
+PB: 23 moves
+PW: 25 moves
+
+---- EFFICIENCY (ms per move) ----
+BR: 1,22
+AVGR: 1,88
+--------------------------------
+
+L B2 L B' U2 D' R' F U2 R2 F2 B2 D2 L2 U B2 U' F2 R;[R2, U', B2, R2, D, F, U', R2, U', L, B', R2, U', F2, D', R2, F2, U2, F2, U2, D, B2, L2, U, B2];75
+U L U2 D' F' D F' U2 F2 L2 D F2 R2 D2 B2 U' F2 R' U2;[L, D2, B, L2, B, U2, R', U, D2, L, U2, L2, D', F2, U', F2, R2, B2, R2, U2, L2, U', F2];28
+D' R U2 B2 L' U2 L2 B2 U2 R U2 L R2 U' R' F L2 U2 L D' U;[D2, L, B2, D2, L2, F, R', D', L, F', D', L2, U', R2, D', B2, R2, B2, L2, D', F2, D', R2];33
