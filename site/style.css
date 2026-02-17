@@ -17,6 +17,9 @@ p {
 }
 
 .btn {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
   background-color: DodgerBlue;
   border: none;
   color: white;
